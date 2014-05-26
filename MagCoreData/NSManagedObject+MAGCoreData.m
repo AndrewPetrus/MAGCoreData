@@ -181,6 +181,7 @@ static NSString const * kUpdateDateKey= @"NSManagedObjectMagCoreDataUpdateDateKe
     }
 }
 
+#warning TODO test here
 - (NSString *)firstLetterCap:(NSString*)string {
     NSString *firstCapChar = [[string substringToIndex:1] capitalizedString];
     NSString *cappedString = [string stringByReplacingCharactersInRange:NSMakeRange(0,1) withString:firstCapChar];
