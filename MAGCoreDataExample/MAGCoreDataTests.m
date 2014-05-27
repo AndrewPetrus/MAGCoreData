@@ -34,6 +34,14 @@
 }
 
 
+- (void)testMAGCoreDataSingleton
+{
+    MAGCoreData *instance1 = [MAGCoreData instance];
+    MAGCoreData *instance2 = [MAGCoreData instance];
+    XCTAssert(instance1 == instance2);
+}
+
+
 - (void)testPrepareCoreDataWithModelName
 {
     XCTAssertNil([MAGCoreData prepareCoreData]);
