@@ -1,0 +1,6 @@
+platform :ios, '7.0'
+
+link_with 'MAGCoreDataExample', 'MAGCoreDataExample Tests'
+
+pod 'Expecta', '~> 0.3.0'
+pod 'OCMock', '~> 2.2.4'
