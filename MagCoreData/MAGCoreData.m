@@ -12,8 +12,6 @@
 @interface MAGCoreData ()
 
 @property (nonatomic, strong) NSManagedObjectContext *mainContext;
-@property (nonatomic, strong) NSManagedObjectModel *model;
-@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStore;
 
 @end
 

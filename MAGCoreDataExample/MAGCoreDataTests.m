@@ -56,6 +56,14 @@
 }
 
 
+- (void)testPersistentStore
+{
+    [MAGCoreData instance];
+    [MAGCoreData prepareCoreData];
+    XCTAssertNotNil([[MAGCoreData instance] persistentStore]);
+}
+
+
 - (void)testContextAfterClose
 {
     [MAGCoreData instance];

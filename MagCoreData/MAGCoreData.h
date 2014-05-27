@@ -10,6 +10,9 @@
 
 @interface MAGCoreData : NSObject
 
+@property (nonatomic, strong) NSManagedObjectModel *model;
+@property (nonatomic, strong) NSPersistentStoreCoordinator *persistentStore;
+
 + (instancetype)instance;
 
 //default is NO
