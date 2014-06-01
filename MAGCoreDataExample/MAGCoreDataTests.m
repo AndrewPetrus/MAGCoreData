@@ -8,6 +8,10 @@
 
 #import <XCTest/XCTest.h>
 #import "MAGCoreData.h"
+#import "NSManagedObjectContext+MAGCoreData.h"
+
+#define EXP_SHORTHAND
+#import "Expecta.h"
 
 @interface MAGCoreDataTests : XCTestCase
 
@@ -18,6 +22,7 @@
 - (void)setUp
 {
     [super setUp];
+    [MAGCoreData instance];
     // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
@@ -25,12 +30,13 @@
 {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
+    [MAGCoreData deleteAll];
 }
 
 
 - (void)testMAGCoreDataInstance
 {
-    XCTAssertNotNil([MAGCoreData instance]);
+    expect([MAGCoreData instance]).notTo.beNil();
 }
 
 
@@ -38,7 +44,7 @@
 {
     MAGCoreData *instance1 = [MAGCoreData instance];
     MAGCoreData *instance2 = [MAGCoreData instance];
-    XCTAssert(instance1 == instance2);
+    expect(instance1).to.beIdenticalTo(instance2);
 }
 
 
@@ -50,7 +56,6 @@
 
 - (void)testContext
 {
-    [MAGCoreData instance];
     [MAGCoreData prepareCoreData];
     XCTAssertNotNil([MAGCoreData context]);
 }
@@ -58,7 +63,6 @@
 
 - (void)testPersistentStore
 {
-    [MAGCoreData instance];
     [MAGCoreData prepareCoreData];
     XCTAssertNotNil([[MAGCoreData instance] persistentStore]);
 }
@@ -66,10 +70,31 @@
 
 - (void)testContextAfterClose
 {
-    [MAGCoreData instance];
     [MAGCoreData prepareCoreData];
     [MAGCoreData deleteAll];
     XCTAssertNil([MAGCoreData context]);
+}
+
+
+- (void)testBlockOperation
+{
+    NSManagedObjectContext *cntx = [MAGCoreData createPrivateContext];
+    [cntx performBlock:^{
+        sleep(1);
+        expect(cntx).notTo.beNil();
+    }];
+}
+
+
+- (void)testAsyncBlockOperation
+{
+    NSInteger __block a = 1;
+    NSManagedObjectContext *cntx = [MAGCoreData createPrivateContext];
+    [cntx performBlock:^{
+        sleep(1);
+        a = 2;
+    }];
+    expect(@(a)).will.beIdenticalTo(@(2));
 }
 
 @end
